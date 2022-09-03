@@ -2,7 +2,7 @@
 
 ## Summary
 
-Goal is to build a VPC and applications in US East
+Goal is to build a VPC and application which is dual redundant in US East 2 and US West 2
 
 ## Linking Azure CLI and Terraform
 
@@ -15,15 +15,16 @@ However, it needs some environment variables to know which account to use. To ma
 ## Concept of Operation
 
 Rather than make each of these modules, the goal is to make them somewhat independent
-by using data sources and an "azurerm" remote so that each could be separate repositories.
+by using data sources and an "azurerm" remote so that each could be separate repositories.  More importantly, I want to model how an organization could decouple terraform projects into different repositories and access shared state.
 
 - `bootstrap` creates a Storage Account, and two containers - "terraform" and "app", and 
   places its state only on the filesystem.  All other template directories keep state 
   in that storage account.
 
-- `vnet` creates 2 peered virtual networks with application and database subnets.
-  The application subnets can use a NAT Gateway to reach the outside world.
-  A bastion is created in each application subnet.
+- `vnet` creates 2 virtual networks with application and database subnets.
+  The application subnets can use a NAT Gateway to reach the outside world, and
+  a network security group so that only HTTP and HTTPS can some in. A bastion
+  is created in each application subnet.
 
 - `pgdb` creates a postgres server in the db subnets with replication.
 
