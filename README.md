@@ -14,6 +14,9 @@ However, it needs some environment variables to know which account to use. To ma
 
 ## Concept of Operation
 
+Rather than make each of these modules, the goal is to make them somewhat independent
+by using data sources and an "azurerm" remote so that each could be separate repositories.
+
 - `bootstrap` creates a Storage Account, and two containers - "terraform" and "app", and 
   places its state only on the filesystem.  All other template directories keep state 
   in that storage account.
