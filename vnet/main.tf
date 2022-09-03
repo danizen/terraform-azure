@@ -55,3 +55,53 @@ module "vnet" {
     }
   }
 }
+
+resource "azurerm_network_security_group" "sg1" {
+  name                = "nsg-danizen-1"
+  location            = module.vnet["vnet-danizen-1"].vnet_location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_network_security_group" "sg2" {
+  name                = "nsg-danizen-2"
+  location            = module.vnet["vnet-danizen-2"].vnet_location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_network_security_rule" "sg1ssh" {
+  name                        = "Allow SSH to subnet-app"
+  priority                    = 300
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "10.0.1.0/24"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.sg1.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "vnet1sg1" {
+  subnet_id                 = module.vnet["vnet-danizen-1"].vnet_subnets[0]
+  network_security_group_id = azurerm_network_security_group.sg1.id
+}
+
+resource "azurerm_network_security_rule" "sg2ssh" {
+  name                        = "Allow SSH to subnet-app"
+  priority                    = 300
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "10.1.1.0/24"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.sg2.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "vnet2sg2" {
+  subnet_id                 = module.vnet["vnet-danizen-2"].vnet_subnets[0]
+  network_security_group_id = azurerm_network_security_group.sg2.id
+}
