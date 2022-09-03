@@ -33,3 +33,9 @@ by using data sources and an "azurerm" remote so that each could be separate rep
  
 `pgdb` and `app` will import the state from `vnet`
 
+## Status
+
+I now have a minimally functional VPC with the two vnets and subnets per VPC. Security
+is not quite there yet, but VMs in the app subnets can be reached via SSH (directly) whereas
+VMs in the db subnet are not accessible.  Since there is not yet a NAT gateway, none of
+these can reach the internet.
