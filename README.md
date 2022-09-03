@@ -21,9 +21,9 @@ by using data sources and an "azurerm" remote so that each could be separate rep
   places its state only on the filesystem.  All other template directories keep state 
   in that storage account.
 
-- `vnet` creates a two tier virtual network with application and database subnets.
+- `vnet` creates 2 peered virtual networks with application and database subnets.
   The application subnets can use a NAT Gateway to reach the outside world.
-  A bastion is created in the application subnet.
+  A bastion is created in each application subnet.
 
 - `pgdb` creates a postgres server in the db subnets with replication.
 

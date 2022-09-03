@@ -19,8 +19,8 @@ resource "azurerm_resource_group" "rg" {
   location = var.region_name
 
   tags = {
-    Environment = "Terraform Bootstrap"
-    Team        = "DevOps"
+    Environment = var.environment
+    Team        = var.team
   }
 }
 

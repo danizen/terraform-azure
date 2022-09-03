@@ -1,5 +1,5 @@
 variable "resource_group_name" {
-  default = "rg-danizen-bootstrap"
+  default = "rg-danizen-vnet"
 }
 
 variable "region_name" {
