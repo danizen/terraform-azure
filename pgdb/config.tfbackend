@@ -1,0 +1,4 @@
+resource_group_name  = "rg-danizen-bootstrap"
+storage_account_name = "sadanizentf"
+container_name       = "tfstate"
+key                  = "pgdb.terraform.tfstate"
